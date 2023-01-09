@@ -3,7 +3,10 @@ package com.tulioperez
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.d
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,12 +21,21 @@ const val URL = "$BASE_URL?$API_KEY/"
 
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var adapter: Adapter
+    lateinit var linearLayoutManager: LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        getData()
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        recyclerView.setHasFixedSize(true)
 
+        linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
+
+        getData()
     }
 
     private fun getData() {
@@ -35,22 +47,22 @@ class MainActivity : AppCompatActivity() {
 
         val retrofitData = retrofitBuilder.getData()
 
-        retrofitData.enqueue(object : Callback<Collection> {
-            override fun onResponse(call: Call<Collection>, response: Response<Collection>) {
+        retrofitData.enqueue(object : Callback<JsonData> {
+            override fun onResponse(
+                call: Call<JsonData>,
+                response: Response<JsonData>) {
                 val responseBody = response.body()!!
-                val stringBuilder = StringBuilder()
 
-                for (item in responseBody.collection.items) {
-                    stringBuilder.append(item.data[0].title)
-                    stringBuilder.append("\n")
-                }
+                adapter = Adapter(baseContext, responseBody)
+                adapter.notifyDataSetChanged()
 
-                val textView = findViewById<TextView>(R.id.text_id)
-                textView.text = stringBuilder.toString()
+                val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+                recyclerView.adapter = adapter
+
             }
 
-            override fun onFailure(call: Call<Collection>, t: Throwable) {
-                Log.d("MainActivity", "onFailure: ${t.message}")
+            override fun onFailure(call: Call<JsonData>, t: Throwable) {
+                d("MainActivity", "onFailure: ${t.message}")
             }
         })
     }
