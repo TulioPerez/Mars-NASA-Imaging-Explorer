@@ -1,13 +1,16 @@
 package com.tulioperez
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.Rotate
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+
 
 class Adapter(val context: Context, val data: JsonData) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
@@ -33,7 +36,18 @@ class Adapter(val context: Context, val data: JsonData) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = data.collection.items[position].data[0].title
         holder.desc.text = data.collection.items[position].data[0].description
-        holder.image.setImageURI(Uri.parse(data.collection.items[position].href))
+
+        // Load & format images
+        val href = data.collection.items[position].links[0].href
+
+        Glide.with(context)
+            .load(href)
+            .thumbnail()
+            .transition(withCrossFade())
+            .placeholder(R.drawable.image_placeholder)
+            .error(R.drawable.image_no_signal)
+            .transform(Rotate(90))
+            .into(holder.image)
     }
 
     override fun getItemCount(): Int {
