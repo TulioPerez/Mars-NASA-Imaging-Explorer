@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MARS Imaging</string>
+    <string name="exit_message">"Press 'BACK' again to exit"</string>
+    <string name="error_server">"Sever error. Please try again later"</string>
+    <string name="error_connection">"Connection error. Please check your connection and try again"</string>
+
 </resources>

@@ -2,17 +2,27 @@ package com.tulioperez
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import com.google.android.material.navigation.NavigationBarView
 
 const val INTRO_DURATION: Long = 3000
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var versionNum: String
+    private lateinit var windowInsetsController: WindowInsetsController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +42,13 @@ class SplashActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        //Remove Cutout & Bars
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
+        // Hide status bar and navigation bar.
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
+
+        window.decorView.setOnApplyWindowInsetsListener { view, windowInsets ->
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+            view.onApplyWindowInsets(windowInsets)
         }
 
         splashLogo.animate().alpha(1f)
@@ -60,6 +71,18 @@ class SplashActivity : AppCompatActivity() {
             }
 
     }
+
+//    override fun onWindowFocusChanged(hasFocus: Boolean) {
+//        super.onWindowFocusChanged(hasFocus)
+//        if (hasFocus) {
+//            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                    or View.SYSTEM_UI_FLAG_FULLSCREEN
+//                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+//        }
+//    }
 }
 
 //TODO implement splash screen

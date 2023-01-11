@@ -32,10 +32,9 @@ class DetailActivity : AppCompatActivity() {
         Glide.with(this)
             .load(href)
             .transition(DrawableTransitionOptions.withCrossFade())
-//            .placeholder(R.drawable.image_placeholder)
-            .error(R.drawable.image_no_signal)
+            .error(R.drawable.image_no_wifi)
             .transform(Rotate(90))
-//            .override(3000,2500)
+//            .dontTransform()
             .into(zoomView)
 
 

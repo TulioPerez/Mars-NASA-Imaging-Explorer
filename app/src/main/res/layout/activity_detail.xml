@@ -13,43 +13,47 @@
 <!--        android:tintMode="multiply"-->
     <com.jsibbold.zoomage.ZoomageView
         android:id="@+id/zoom_layout"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/mars_high"
         android:scaleType="center"
-        app:layout_constraintBottom_toTopOf="@id/detail_desc"
+        app:layout_constraintBottom_toTopOf="@id/details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_title"
+        app:layout_constraintTop_toTopOf="parent"
         app:zoomage_animateOnReset="true"
         app:zoomage_autoCenter="true"
         app:zoomage_restrictBounds="true"
         app:zoomage_translatable="true"
         app:zoomage_zoomable="true" />
 
-    <TextView
-        android:id="@+id/detail_title"
+    <LinearLayout
+        android:id="@+id/details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/zoom_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/detail_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:textColor="@android:color/black"
+        android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zoom_layout" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detail_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

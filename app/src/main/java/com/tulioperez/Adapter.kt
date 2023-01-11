@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.Rotate
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 
-lateinit var href: String
 
 class Adapter(val context: Context, val data: JsonData) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
@@ -37,7 +36,7 @@ class Adapter(val context: Context, val data: JsonData) :
             // pass the adapter position
             intent.putExtra("title", title.text)
             intent.putExtra("description", desc.text)
-            intent.putExtra("image", href)
+            intent.putExtra("image", data.collection.items[adapterPosition].links[0].href)
             view.context.startActivity(intent)
         }
     }
@@ -55,18 +54,19 @@ class Adapter(val context: Context, val data: JsonData) :
         holder.desc.text = data.collection.items[position].data[0].description
 
         // Load & format images
-        href = data.collection.items[position].links[0].href
+        val href = data.collection.items[position].links[0].href
+
+//        val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
 
         Glide.with(context)
             .load(href)
-//            .thumbnail()
             .transition(withCrossFade())
-//            .placeholder(R.drawable.image_placeholder)
-            .error(R.drawable.image_no_signal)
-            .transform(Rotate(90))
+//            .sizeMultiplier(1.0f)
+//            .apply(requestOptions)
+            .error(R.drawable.image_no_wifi)
+            .transform(Rotate(82))
             .into(holder.image)
     }
-    //            .transform(Rotate(90), CenterCrop())
 
     override fun getItemCount(): Int {
         return data.collection.items.size
