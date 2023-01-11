@@ -1,9 +1,11 @@
 package com.tulioperez
 
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log.d
 import android.view.View
+import android.view.WindowManager
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 const val BASE_URL = "https://images-api.nasa.gov"
+
 const val API_KEY = "api_key=4uoKLb63ESN9e6c30hcgZU0hVPWQrkQaqI10b4u1"
 const val URL = "$BASE_URL?$API_KEY/"
 
@@ -29,6 +32,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Remove Cutout & Bars
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+
+        }
+
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.setHasFixedSize(true)
 
@@ -39,6 +51,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
+
+        val loader: ProgressBar = findViewById(R.id.progress_loader)
+
         val retrofitBuilder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(URL)
@@ -50,7 +65,8 @@ class MainActivity : AppCompatActivity() {
         retrofitData.enqueue(object : Callback<JsonData> {
             override fun onResponse(
                 call: Call<JsonData>,
-                response: Response<JsonData>) {
+                response: Response<JsonData>
+            ) {
                 data = response.body()!!
 
                 adapter = Adapter(baseContext, data)
@@ -58,12 +74,15 @@ class MainActivity : AppCompatActivity() {
 
                 recyclerView.adapter = adapter
 
+                loader.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<JsonData>, t: Throwable) {
                 d("MainActivity", "onFailure: ${t.message}")
             }
         })
+
+
     }
 
 }

@@ -12,10 +12,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.Rotate
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 
+lateinit var href: String
+
 class Adapter(val context: Context, val data: JsonData) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         var title: TextView
         var desc: TextView
         var image: ImageView
@@ -29,9 +32,12 @@ class Adapter(val context: Context, val data: JsonData) :
         override fun onClick(view: View) {
             // create an intent to open the DetailActivity
             val intent = Intent(view.context, DetailActivity::class.java)
+
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             // pass the adapter position
-            intent.putExtra("position", adapterPosition)
+            intent.putExtra("title", title.text)
+            intent.putExtra("description", desc.text)
+            intent.putExtra("image", href)
             view.context.startActivity(intent)
         }
     }
@@ -39,6 +45,7 @@ class Adapter(val context: Context, val data: JsonData) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.row_items, parent, false)
         val holder = ViewHolder(itemView)
+
         itemView.setOnClickListener(holder)
         return holder
     }
@@ -48,18 +55,18 @@ class Adapter(val context: Context, val data: JsonData) :
         holder.desc.text = data.collection.items[position].data[0].description
 
         // Load & format images
-        val href = data.collection.items[position].links[0].href
+        href = data.collection.items[position].links[0].href
 
         Glide.with(context)
             .load(href)
-            .thumbnail()
+//            .thumbnail()
             .transition(withCrossFade())
-            .placeholder(R.drawable.image_placeholder)
+//            .placeholder(R.drawable.image_placeholder)
             .error(R.drawable.image_no_signal)
             .transform(Rotate(90))
             .into(holder.image)
-
     }
+    //            .transform(Rotate(90), CenterCrop())
 
     override fun getItemCount(): Int {
         return data.collection.items.size
