@@ -48,17 +48,8 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
                 finish()
-//            overridePendingTransition(com.bumptech.glide.R.anim.abc_fade_in, 0)
-//            overridePendingTransition(R.anim.fade_in, 0)
             }
 
     }
 
 }
-
-//TODO
-// implement tests
-// do documentation
-// fix transition from splash to main
-
-// using AndroidX

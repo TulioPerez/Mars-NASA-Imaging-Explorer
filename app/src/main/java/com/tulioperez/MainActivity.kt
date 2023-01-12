@@ -36,12 +36,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        swipeView = findViewById(R.id.swipe_view)
-        swipeView.setOnRefreshListener {
-            getData()
-            swipeView.isRefreshing = false
-        }
-
         // Hide status bar
         val windowInsetsController =
             WindowCompat.getInsetsController(window, window.decorView)
@@ -51,25 +45,37 @@ class MainActivity : AppCompatActivity() {
             view.onApplyWindowInsets(windowInsets)
         }
 
+        // Set fixed size for recyclerView to improve performance
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.setHasFixedSize(true)
 
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
 
-        getData()
+        // Set swipeView listener to re-fetch data if network or server errors occur
+        swipeView = findViewById(R.id.swipe_view)
+        swipeView.setOnRefreshListener {
+            fetchData()
+            swipeView.isRefreshing = false
+        }
+
+        fetchData()
     }
 
-    private fun getData() {
+    // Populate views
+    private fun fetchData() {
         val loader = findViewById<ProgressBar>(R.id.progress_loader)
         val errorView: ImageView = findViewById(R.id.error_image)
 
+        // Are we running after a refresh?
         if (errorView.visibility == View.VISIBLE) {
-            errorView.visibility = View.INVISIBLE
 
-            swipeView.visibility = View.INVISIBLE
+            // Yes - get the views out of the way!
+            errorView.visibility = View.GONE
+            swipeView.visibility = View.GONE
         }
 
+        // Show progress loader
         loader.visibility = View.VISIBLE
 
         val retrofitBuilder = Retrofit.Builder()
@@ -89,19 +95,18 @@ class MainActivity : AppCompatActivity() {
                     recyclerView.adapter = adapter
                 }
 
+                // Done loading - remove the loader
                 loader.visibility = View.GONE
-
             }
 
             override fun onFailure(call: Call<JsonData>, t: Throwable) {
-
+                // We had an error fetching data - present error imageView + swipeView to re-fetch
                 errorView.visibility = View.VISIBLE
                 swipeView.visibility = View.VISIBLE
 
-
                 if (t is IOException) {
                     if (isNetworkConnected()) {
-                        // Server error
+                        // Server error occurred
                         Toast.makeText(
                             this@MainActivity,
                             R.string.error_server, Toast.LENGTH_LONG
@@ -110,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                         errorView.setImageResource(R.drawable.image_no_cloud)
 
                     } else {
-                        // Network error
+                        // Network error occurred
                         Toast.makeText(
                             this@MainActivity,
                             R.string.error_connection, Toast.LENGTH_LONG
@@ -120,7 +125,6 @@ class MainActivity : AppCompatActivity() {
 
                     }
 
-
                 }
                 loader.visibility = View.GONE
             }
@@ -128,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // The user intend to leave!? but why?
+    // User wants to leave? Prompt to press back again to exit the application
     private var backPressed = false
     override fun onBackPressed() {
         if (backPressed) {
@@ -140,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.postDelayed({ backPressed = false }, 2000)
     }
 
+    // Helper function to check if there is an active internet connection
     private fun isNetworkConnected(): Boolean {
         val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = manager.activeNetwork
