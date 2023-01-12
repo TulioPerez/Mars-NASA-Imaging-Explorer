@@ -1,4 +1,4 @@
-# **NASA: Mars Imaging**
+# **Mars: NASA Imaging Explorer**
 
 #### **Overview:**
 ###### This application displays images of Mars utilizing NASA's APOD API. It was built in Kotlin, uses Retrofit and Glide libraries to fetch & display images and has error handling functions to present error messages and allow re-fetching of data if an error occurs while fetching the data.
@@ -13,7 +13,7 @@
 ###### The application uses a basic error handling mechanism to show a user-friendly error message when an error occurs while fetching the data. At this time, the error’s corresponding image view is displayed, and the user can swipe down to refresh the data. Currently, the application’s onFailure() override function handles fetching errors that occur when MainActivity initializes. 
 
 #### **Testing:**
-###### The application was tested on multiple devices and emulators with different screen sizes and resolutions to ensure compatibility and proper functionality. Unit tests were written to test the individual components and methods within the codebase. The application was also tested against a variety of data sets to ensure it can handle different scenarios and edge cases. The testing framework used for this application is JUnit and Espresso for UI testing.
+###### The application was tested on multiple devices and emulators with different screen sizes and resolutions to ensure compatibility and proper functionality. Unit tests were written to test the individual components and methods within the codebase. The application was also tested against a variety of data sets to ensure it can handle different scenarios and edge cases. The testing frameworks used for this application are JUnit and Mockito.
 
 #### **API Documentation:**
 ###### This application uses the NASA's “APOD” public, RESTful API. The images displayed are the result of a search on the API’s data. A JSON object is returned containing data about images and metadata. The base URL for the API is "https://images-api.nasa.gov" and requires an API key for authentication, which is included in the retrofit call’s “URL” value. 
