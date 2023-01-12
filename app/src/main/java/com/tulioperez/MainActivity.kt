@@ -30,16 +30,16 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adapter: Adapter
     lateinit var recyclerView: RecyclerView
-    lateinit var swipe_view: SwipeRefreshLayout
+    lateinit var swipeView: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        swipe_view = findViewById(R.id.swipe_view)
-        swipe_view.setOnRefreshListener {
+        swipeView = findViewById(R.id.swipe_view)
+        swipeView.setOnRefreshListener {
             getData()
-            swipe_view.isRefreshing = false
+            swipeView.isRefreshing = false
         }
 
         // Hide status bar
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         if (errorView.visibility == View.VISIBLE) {
             errorView.visibility = View.INVISIBLE
 
-            swipe_view.visibility = View.INVISIBLE
+            swipeView.visibility = View.INVISIBLE
         }
 
         loader.visibility = View.VISIBLE
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: Call<JsonData>, t: Throwable) {
 
                 errorView.visibility = View.VISIBLE
-                swipe_view.visibility = View.VISIBLE
+                swipeView.visibility = View.VISIBLE
 
 
                 if (t is IOException) {

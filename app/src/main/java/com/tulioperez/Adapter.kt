@@ -72,5 +72,4 @@ class Adapter(val context: Context, val data: JsonData) :
         return data.collection.items.size
     }
 
-
 }
