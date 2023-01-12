@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Populate views
-    private fun fetchData() {
+    fun fetchData() {
         val loader = findViewById<ProgressBar>(R.id.progress_loader)
         val errorView: ImageView = findViewById(R.id.error_image)
 

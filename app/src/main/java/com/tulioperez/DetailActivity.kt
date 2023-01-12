@@ -36,8 +36,6 @@ class DetailActivity : AppCompatActivity() {
             .transform(Rotate(90))
 //            .dontTransform()
             .into(zoomView)
-
-
     }
 
 }
