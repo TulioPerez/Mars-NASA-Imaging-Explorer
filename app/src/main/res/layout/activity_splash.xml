@@ -8,9 +8,6 @@
     android:padding="0dp"
     tools:context=".SplashActivity">
 
-    <!--        android:adjustViewBounds="true"-->
-
-
     <ImageView
         android:id="@+id/splash_image"
         android:layout_width="match_parent"
@@ -30,9 +27,9 @@
         android:layout_height="wrap_content"
         android:alpha="0"
         android:gravity="center"
-        android:text="MARS"
+        android:text="@string/logo_text"
         android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,9 +43,9 @@
         android:layout_height="wrap_content"
         android:alpha="0"
         android:gravity="center"
-        android:text="NASA Imaging Explorer"
-        android:textColor="@color/grey40"
-        android:textSize="12sp"
+        android:text="@string/logo_blurb"
+        android:textColor="@color/white"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,59 +58,10 @@
         android:gravity="center"
         android:alpha="0"
         android:textColor="@color/grey40"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_blurb" />
-
-
-    <!--        android:indeterminateDrawable="@drawable/progress_bar"-->
-    <!--        android:indeterminateTint="@color/white"-->
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="250dp"-->
-    <!--        android:layout_margin="25dp"-->
-    <!--        android:background="#80000000"-->
-    <!--        android:visibility="visible"-->
-    <!--        android:gravity="center_horizontal"-->
-    <!--        android:orientation="vertical"-->
-    <!--        android:padding="10dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/disclaimer"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="200dp"-->
-    <!--            android:gravity="center_horizontal"-->
-    <!--            android:text="Welcome to Dome Master"-->
-    <!--            android:textColor="@color/white"-->
-    <!--            android:scrollbars="vertical"-->
-    <!--            android:textSize="18sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--        <CheckBox-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="40dp"-->
-    <!--            android:layout_marginBottom="20dp"-->
-    <!--            android:gravity="center"-->
-    <!--            android:text="I agree - let me in!"-->
-    <!--            android:textStyle="italic"-->
-    <!--            android:textColor="@color/white"-->
-    <!--            app:buttonTint="#FFEBEE"-->
-    <!--            app:layout_constraintBottom_toBottomOf="@+id/disclaimer"-->
-    <!--            app:layout_constraintEnd_toEndOf="@+id/disclaimer"-->
-    <!--            app:layout_constraintStart_toStartOf="@+id/disclaimer" />
--->
-    <!---->
-    <!--    </LinearLayout>-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

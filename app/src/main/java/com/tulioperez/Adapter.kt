@@ -1,9 +1,11 @@
 package com.tulioperez
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.Rotate
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -11,6 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 
 class Adapter(val context: Context, val data: JsonData) :
     RecyclerView.Adapter<ViewHolder>() {
+    private val TAG = "Adapter"
 
     // Inflate & setup layout for RecyclerView items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,6 +26,12 @@ class Adapter(val context: Context, val data: JsonData) :
 
     // Bind data to ViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // Prep placeholder (progress loader animation) for Glide images
+        val loader = CircularProgressDrawable(context)
+        loader.strokeWidth = 5f
+        loader.centerRadius = 30f
+        loader.start()
+
         holder.title.text = data.collection.items[position].data[0].title
         holder.desc.text = data.collection.items[position].data[0].description
 
@@ -32,9 +41,13 @@ class Adapter(val context: Context, val data: JsonData) :
         Glide.with(context)
             .load(href)
             .transition(withCrossFade())
+            .placeholder(loader)
             .error(R.drawable.image_no_wifi)
             .transform(Rotate(82))
             .into(holder.image)
+
+        Log.d(TAG, "Image loaded: $href")
+
     }
 
     // Retrieve number of data items

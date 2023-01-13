@@ -9,8 +9,6 @@
 
     tools:context=".DetailActivity">
 
-<!--        app:tint="#fc7900"-->
-<!--        android:tintMode="multiply"-->
     <com.jsibbold.zoomage.ZoomageView
         android:id="@+id/zoom_layout"
         android:background="@color/black"

@@ -3,6 +3,7 @@ package com.tulioperez
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -20,14 +21,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
+
 // Constants
 const val BASE_URL = "https://images-api.nasa.gov"
 const val API_KEY = "api_key=4uoKLb63ESN9e6c30hcgZU0hVPWQrkQaqI10b4u1"
 const val URL = "$BASE_URL?$API_KEY/"
-
+const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var adapter: Adapter
     lateinit var recyclerView: RecyclerView
     lateinit var swipeView: SwipeRefreshLayout
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
         // Hide status bar
         val windowInsetsController =
@@ -64,6 +66,12 @@ class MainActivity : AppCompatActivity() {
 
     // Populate views
     fun fetchData() {
+        // Blur BG image
+        val bgImageBlur = findViewById<View>(R.id.bg_image_blur)
+        bgImageBlur.animate()
+            .alpha(1f)
+            .duration = 3000
+
         val loader = findViewById<ProgressBar>(R.id.progress_loader)
         val errorView: ImageView = findViewById(R.id.error_image)
 
@@ -90,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 call: Call<JsonData>,
                 response: Response<JsonData>
             ) {
+
                 response.body()?.apply {
                     adapter = Adapter(baseContext, this)
                     recyclerView.adapter = adapter
@@ -97,6 +106,7 @@ class MainActivity : AppCompatActivity() {
 
                 // Done loading - remove the loader
                 loader.visibility = View.GONE
+                Log.d(TAG, "onResponse: Fetching successful")
             }
 
             override fun onFailure(call: Call<JsonData>, t: Throwable) {
@@ -106,6 +116,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (t is IOException) {
                     if (isNetworkConnected()) {
+                        Log.e(TAG, "onFailure: Server error")
                         // Server error occurred
                         Toast.makeText(
                             this@MainActivity,
@@ -116,6 +127,8 @@ class MainActivity : AppCompatActivity() {
 
                     } else {
                         // Network error occurred
+                        Log.e(TAG, "onFailure: network error")
+
                         Toast.makeText(
                             this@MainActivity,
                             R.string.error_connection, Toast.LENGTH_LONG
@@ -148,7 +161,7 @@ class MainActivity : AppCompatActivity() {
     private fun isNetworkConnected(): Boolean {
         val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = manager.activeNetwork
+        Log.d(TAG, "isNetworkConnected: $activeNetwork")
         return activeNetwork != null
     }
-
 }

@@ -23,18 +23,15 @@ class SplashActivity : AppCompatActivity() {
 
         versionField.text = "Ver. " + BuildConfig.VERSION_NAME
 
-
-        // Hide status bar and navigation bar.
-        val windowInsetsController =
-            WindowCompat.getInsetsController(window, window.decorView)
-
+        // Hide status bar and navigation bar
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         window.decorView.setOnApplyWindowInsetsListener { view, windowInsets ->
             windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
             view.onApplyWindowInsets(windowInsets)
         }
 
-        splashLogo.animate().alpha(1f)
-            .setDuration(INTRO_DURATION)
+        // Animate the BG image & text
+        splashLogo.animate().alpha(1f).setDuration(INTRO_DURATION)
             .scaleX(2.5f)
             .scaleY(2.5f)
 
@@ -42,14 +39,11 @@ class SplashActivity : AppCompatActivity() {
         splashBlurb.animate().alpha(1f).setDuration(2000)
         versionField.animate().alpha(1f).setDuration(2000)
 
-        splashLogo.animate().alpha(1f)
-            .setDuration(INTRO_DURATION)
+        splashLogo.animate().alpha(1f).setDuration(INTRO_DURATION)
             .withEndAction {
-                val intent = Intent(applicationContext, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-
     }
-
 }

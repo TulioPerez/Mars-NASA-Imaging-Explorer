@@ -19,7 +19,6 @@
             android:id="@+id/item_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:tint="#fc825b"
             android:tintMode="multiply"
             android:scaleType="center"/>
 
