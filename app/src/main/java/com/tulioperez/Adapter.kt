@@ -17,7 +17,7 @@ class Adapter(val context: Context, val data: JsonData) :
 
     // Inflate & setup layout for RecyclerView items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.row_items, parent, false)
+        val itemView = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false)
         val holder = ViewHolder(itemView, data)
 
         itemView.setOnClickListener(holder)
@@ -43,7 +43,8 @@ class Adapter(val context: Context, val data: JsonData) :
             .transition(withCrossFade())
             .placeholder(loader)
             .error(R.drawable.image_no_wifi)
-            .transform(Rotate(82))
+            .override(2000,2000)
+            .transform(Rotate(-8))
             .into(holder.image)
 
         Log.d(TAG, "Image loaded: $href")

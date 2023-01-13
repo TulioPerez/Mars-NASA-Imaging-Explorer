@@ -45,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
             .placeholder(loader)
             .transition(DrawableTransitionOptions.withCrossFade())
             .error(R.drawable.image_no_wifi)
-            .transform(Rotate(90))
+            .transform(Rotate(-8))
             .into(zoomView)
 
         Log.d(TAG, "Image loaded: $href")
