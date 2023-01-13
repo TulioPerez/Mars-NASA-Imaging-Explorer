@@ -32,8 +32,8 @@ class SplashActivity : AppCompatActivity() {
 
         // Animate the BG image & text
         splashLogo.animate().alpha(1f).setDuration(INTRO_DURATION)
-            .scaleX(2.5f)
-            .scaleY(2.5f)
+            .scaleX(1.5f)
+            .scaleY(1.5f)
 
         splashLogoText.animate().alpha(1f).setDuration(2000)
         splashBlurb.animate().alpha(1f).setDuration(2000)

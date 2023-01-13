@@ -43,7 +43,6 @@ class Adapter(val context: Context, val data: JsonData) :
             .transition(withCrossFade())
             .placeholder(loader)
             .error(R.drawable.image_no_wifi)
-            .override(2000,2000)
             .transform(Rotate(-8))
             .into(holder.image)
 
