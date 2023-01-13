@@ -1,7 +1,9 @@
 # **Mars: NASA Imaging Explorer**
 
 #### **Overview:**
-###### This application displays images of Mars utilizing NASA's APOD API. The API reference can be found here: https://images.nasa.gov/docs/images.nasa.gov_api_docs.pdf. The application was built in Kotlin, uses Retrofit and Glide libraries to fetch & display images and has error handling functions to present error messages and allow re-fetching of data if an error occurs while fetching the data.
+###### This application displays images of Mars utilizing NASA's APOD API. The API reference can be found here: https://images.nasa.gov/docs/images.nasa.gov_api_docs.pdf. 
+
+The application was built in Kotlin, uses Retrofit and Glide libraries to fetch & display images and has error handling functions to present error messages and allow re-fetching of data if an error occurs during this process.
 
 #### **Design Decisions:**
 ###### Retrofit & GsonConverterFactory are used for network requests and JSON data parsing. Glide was chosen for image parsing due to its efficiency and performance (almost twice as fast as Picasso) and for its built-in image caching abilities. Zoomage was used in the detail activity allowing pinch-to-zoom functionality as well as image translation from left to right. The application uses swipe-to-refresh functionality to allow user to re-fetch data when network or server errors occurs while fetching data. The application user AndroidX libraries.
