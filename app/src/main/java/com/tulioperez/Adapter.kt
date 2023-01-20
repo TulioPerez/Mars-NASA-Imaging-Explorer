@@ -26,12 +26,6 @@ class Adapter(val context: Context, val data: JsonData) :
 
     // Bind data to ViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Prep placeholder (progress loader animation) for Glide images
-        val loader = CircularProgressDrawable(context)
-        loader.strokeWidth = 5f
-        loader.centerRadius = 30f
-        loader.start()
-
         holder.title.text = data.collection.items[position].data[0].title
         holder.desc.text = data.collection.items[position].data[0].description
 
@@ -41,7 +35,6 @@ class Adapter(val context: Context, val data: JsonData) :
         Glide.with(context)
             .load(href)
             .transition(withCrossFade())
-            .placeholder(loader)
             .error(R.drawable.image_no_wifi)
             .transform(Rotate(-8))
             .into(holder.image)
